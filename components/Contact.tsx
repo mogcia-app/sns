@@ -1,29 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect } from 'react'
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    service: '',
-    message: ''
-  })
+  useEffect(() => {
+    // formrunのスクリプトを動的に読み込む
+    const script = document.createElement('script')
+    script.src = 'https://sdk.form.run/js/v2/formrun.js'
+    script.async = true
+    document.body.appendChild(script)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // フォーム送信処理
-    console.log('Form submitted:', formData)
-    alert('お問い合わせありがとうございます。担当者よりご連絡いたします。')
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+    return () => {
+      // クリーンアップ
+      if (script.parentNode) {
+        script.parentNode.removeChild(script)
+      }
+    }
+  }, [])
 
   return (
     <section id="contact" className="py-20 bg-white">
@@ -40,96 +33,85 @@ const Contact = () => {
             {/* お問い合わせフォーム */}
             <div className="bg-gray-50 rounded-2xl p-8">
               <h3 className="text-2xl font-semibold text-gray-900 mb-6">無料相談を申し込む</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form className="formrun space-y-6" action="https://form.run/api/v1/r/581xqrnrk27wwnz4fcwisxh6" method="post">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    お名前 *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">お名前</label>
                   <input
+                    name="お名前"
                     type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     placeholder="山田 太郎"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    メールアドレス *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">会社名</label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    placeholder="example@company.com"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                    会社名
-                  </label>
-                  <input
+                    name="会社名"
                     type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     placeholder="株式会社サンプル"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
-                    ご希望のサービス
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
+                  <label className="block text-sm font-medium text-gray-700 mb-2">メールアドレス [必須]</label>
+                  <input
+                    name="メールアドレス"
+                    type="text"
+                    data-formrun-type="email"
+                    data-formrun-required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                  >
-                    <option value="">選択してください</option>
-                    <option value="sns-management">SNSアカウント運用</option>
-                    <option value="content-creation">コンテンツ制作</option>
-                    <option value="influencer-marketing">インフルエンサーマーケティング</option>
-                    <option value="advertising">広告運用</option>
-                    <option value="consulting">コンサルティング</option>
-                    <option value="other">その他</option>
-                  </select>
+                    placeholder="example@company.com"
+                  />
+                  <div data-formrun-show-if-error="メールアドレス" className="text-red-500 text-sm mt-1">
+                    メールアドレスを正しく入力してください
+                  </div>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    メッセージ *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">お問い合わせ [必須]</label>
                   <textarea
-                    id="message"
-                    name="message"
-                    required
+                    name="お問い合わせ"
+                    data-formrun-required
                     rows={5}
-                    value={formData.message}
-                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     placeholder="ご質問やご要望をお聞かせください"
                   />
+                  <div data-formrun-show-if-error="お問い合わせ" className="text-red-500 text-sm mt-1">
+                    お問い合わせ内容を入力してください
+                  </div>
+                </div>
+
+                <div>
+                  <label className="flex items-center text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      name="個人情報利用同意"
+                      data-formrun-required
+                      className="mr-2 w-4 h-4 text-pink-500 border-gray-300 rounded focus:ring-pink-500"
+                    />
+                    個人情報利用同意 [必須]
+                  </label>
+                  <div data-formrun-show-if-error="個人情報利用同意" className="text-red-500 text-sm mt-1">
+                    同意してください
+                  </div>
+                </div>
+
+                {/* ボット投稿をブロックするためのタグ */}
+                <div className="_formrun_gotcha">
+                  <style dangerouslySetInnerHTML={{__html: `._formrun_gotcha {position:absolute!important;height:1px;width:1px;overflow:hidden;}`}} />
+                  <label htmlFor="_formrun_gotcha">If you are a human, ignore this field</label>
+                  <input type="text" name="_formrun_gotcha" id="_formrun_gotcha" tabIndex={-1} />
                 </div>
 
                 <button
                   type="submit"
+                  data-formrun-error-text="未入力の項目があります"
+                  data-formrun-submitting-text="送信中..."
                   className="w-full px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-lg font-semibold rounded-lg hover:from-pink-600 hover:to-rose-600 transition-all"
                 >
-                  無料相談を申し込む
+                  送信
                 </button>
               </form>
             </div>
@@ -145,7 +127,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">メール</p>
-                      <p className="text-gray-600">info@sns-unei-pro.com</p>
+                      <p className="text-gray-600">info@mogcia.jp</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
@@ -154,7 +136,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">電話</p>
-                      <p className="text-gray-600">03-1234-5678</p>
+                      <p className="text-gray-600">092-517-9804</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
