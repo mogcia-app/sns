@@ -6,7 +6,7 @@ const Hero = () => {
         <div 
           className="w-full h-full bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(/images/istockphoto-1315956492-1024x1024.jpg)'
+            backgroundImage: 'url(/images/sns.jpg)'
           }}
         ></div>
         {/* 画像の上にオーバーレイ */}

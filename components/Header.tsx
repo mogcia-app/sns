@@ -5,7 +5,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
            
-            <h1 className="text-2xl font-bold text-gray-900">株式会社MOGCIA</h1>
+            <h1 className="text-[20px] font-bold text-gray-900">株式会社MOGCIA</h1>
           </div>
           <div className="flex items-center">
             <a

@@ -48,6 +48,7 @@ const Services = () => {
               お客様のビジネス目標に合わせて、最適なSNS運用サービスをご提供します
             </p>
           </div>
+
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
