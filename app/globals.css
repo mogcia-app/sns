@@ -14,3 +14,16 @@ body {
 html, body, #__next {
   height: 100%;
 }
+
+/* レスポンシブ時の文字サイズ調整 */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* デフォルト16pxから14pxに縮小 */
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px; /* さらに小さな画面では13pxに */
+  }
+}
